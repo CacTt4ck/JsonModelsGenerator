@@ -12,6 +12,7 @@ public class MyPanel extends JPanel {
     private JLabel title;
     private ImageIcon block, item, tool;
     private JComboBox<ImageIcon> choiceBox;
+    private JPanel boxPanel;
 
     public MyPanel(){
         super();
@@ -20,6 +21,7 @@ public class MyPanel extends JPanel {
     }
 
     private void init(){
+        boxPanel = new JPanel();
         this.title();
         this.choiceBox();
         this.generateButton();
@@ -30,6 +32,7 @@ public class MyPanel extends JPanel {
         title.setHorizontalAlignment(SwingConstants.CENTER);
         title.setFont(new Font("Monaco",Font.BOLD,36));
         title.setForeground(Color.BLACK);
+        title.setBorder(BorderFactory.createEmptyBorder(0,50,0,50));
         this.add(title, BorderLayout.NORTH);
     }
 
@@ -45,7 +48,9 @@ public class MyPanel extends JPanel {
 
         ImageIcon[] imageList = {block, item, tool};
         choiceBox = new JComboBox<ImageIcon>(imageList);
-        this.add(choiceBox, BorderLayout.CENTER);
+        boxPanel.add(choiceBox);
+        boxPanel.setBorder(BorderFactory.createEmptyBorder(75,0,75,0));
+        this.add(boxPanel, BorderLayout.CENTER);
     }
 
 }

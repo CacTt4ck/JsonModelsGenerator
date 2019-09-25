@@ -14,11 +14,12 @@ public class MyFrame extends JFrame {
     }
 
     private void init() {
-        this.setSize(640,480);
+        //this.setSize(640,480);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setFocusable(true);
         this.setContentPane(new MyPanel());
+        this.pack();
         this.setVisible(true);
     }
 }
