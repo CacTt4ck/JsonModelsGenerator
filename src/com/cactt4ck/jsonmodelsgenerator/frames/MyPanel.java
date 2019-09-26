@@ -1,18 +1,16 @@
 package com.cactt4ck.jsonmodelsgenerator.frames;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
 
 public class MyPanel extends JPanel {
 
     private JButton generateBtn;
     private JLabel title;
-    private ImageIcon block, item, tool;
+    private ImageIcon block, item, tool, stair;
     private JComboBox<ImageIcon> choiceBox;
-    private JPanel boxPanel;
+    private JPanel boxPanel, buttonPanel;
 
     public MyPanel(){
         super();
@@ -22,6 +20,7 @@ public class MyPanel extends JPanel {
 
     private void init(){
         boxPanel = new JPanel();
+        buttonPanel = new JPanel();
         this.title();
         this.choiceBox();
         this.generateButton();
@@ -38,15 +37,17 @@ public class MyPanel extends JPanel {
 
     private void generateButton(){
         generateBtn = new JButton("Generate File");
-        this.add(generateBtn, BorderLayout.SOUTH);
+        buttonPanel.add(generateBtn);
+        this.add(buttonPanel, BorderLayout.SOUTH);
     }
 
     private void choiceBox(){
         block = new ImageIcon(new ImageIcon("res/assets/pictures/block.png").getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH));
         item = new ImageIcon(new ImageIcon("res/assets/pictures/item.png").getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH));
         tool = new ImageIcon(new ImageIcon("res/assets/pictures/tool.png").getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH));
+        stair = new ImageIcon(new ImageIcon("res/assets/pictures/stairs.png").getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH));
 
-        ImageIcon[] imageList = {block, item, tool};
+        ImageIcon[] imageList = {block, item, tool, stair};
         choiceBox = new JComboBox<ImageIcon>(imageList);
         boxPanel.add(choiceBox);
         boxPanel.setBorder(BorderFactory.createEmptyBorder(75,0,75,0));
