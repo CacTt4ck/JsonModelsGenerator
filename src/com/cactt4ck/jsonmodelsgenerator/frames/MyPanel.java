@@ -3,7 +3,6 @@ package com.cactt4ck.jsonmodelsgenerator.frames;
 import com.cactt4ck.jsonmodelsgenerator.types.Block;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 
 public class MyPanel extends JPanel {
@@ -29,6 +28,7 @@ public class MyPanel extends JPanel {
         this.choiceBox();
         this.generateButton();
         this.nameField();
+        this.add(boxPanel, BorderLayout.CENTER);
     }
 
     private void nameField(){
@@ -36,7 +36,6 @@ public class MyPanel extends JPanel {
         name.setToolTipText("enter name here");
         name.addActionListener(e -> this.actionListener());
         boxPanel.add(name);
-        this.add(boxPanel);
     }
 
     private void actionListener(){
@@ -78,8 +77,7 @@ public class MyPanel extends JPanel {
         ImageIcon[] imageList = {block, item, tool, stair};
         choiceBox = new JComboBox<ImageIcon>(imageList);
         boxPanel.add(choiceBox);
-        boxPanel.setBorder(BorderFactory.createEmptyBorder(75,0,75,0));
-        this.add(boxPanel, BorderLayout.CENTER);
+        boxPanel.setBorder(BorderFactory.createEmptyBorder(75,150,75,150));
     }
 
 }
