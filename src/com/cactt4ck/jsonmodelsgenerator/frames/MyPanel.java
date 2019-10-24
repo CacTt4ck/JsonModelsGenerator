@@ -23,6 +23,7 @@ public class MyPanel extends JPanel {
 
     private void init(){
         boxPanel = new JPanel();
+        boxPanel.setLayout(new BoxLayout(boxPanel, BoxLayout.Y_AXIS));
         buttonPanel = new JPanel();
         this.title();
         this.choiceBox();
@@ -33,7 +34,23 @@ public class MyPanel extends JPanel {
     private void nameField(){
         name = new JTextField();
         name.setToolTipText("enter name here");
-        this.add(name, BorderLayout.WEST);
+        name.addActionListener(e -> this.actionListener());
+        boxPanel.add(name);
+        this.add(boxPanel);
+    }
+
+    private void actionListener(){
+        ImageIcon choice = (ImageIcon) choiceBox.getSelectedItem();
+        if(choice == block){
+            Block block = new Block(name.getText());
+            block.generateFiles();
+        }else if(choice == item){
+            System.out.println("not ready yet !");
+        }else if(choice == tool){
+            System.out.println("not ready yet !");
+        }else if(choice == stair){
+            System.out.println("not ready yet !");
+        }
     }
 
     private void title(){
@@ -47,10 +64,7 @@ public class MyPanel extends JPanel {
 
     private void generateButton(){
         generateBtn = new JButton("Generate File");
-        generateBtn.addActionListener(e -> {
-            Block block = new Block(name.getText());
-            block.generateFiles();
-        });
+        generateBtn.addActionListener(e -> this.actionListener());
         buttonPanel.add(generateBtn);
         this.add(buttonPanel, BorderLayout.SOUTH);
     }
