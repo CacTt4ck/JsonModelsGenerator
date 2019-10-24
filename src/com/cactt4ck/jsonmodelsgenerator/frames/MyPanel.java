@@ -1,5 +1,7 @@
 package com.cactt4ck.jsonmodelsgenerator.frames;
 
+import com.cactt4ck.jsonmodelsgenerator.types.Block;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
@@ -7,6 +9,7 @@ import java.awt.*;
 public class MyPanel extends JPanel {
 
     private JButton generateBtn;
+    private JTextField name;
     private JLabel title;
     private ImageIcon block, item, tool, stair;
     private JComboBox<ImageIcon> choiceBox;
@@ -24,6 +27,13 @@ public class MyPanel extends JPanel {
         this.title();
         this.choiceBox();
         this.generateButton();
+        this.nameField();
+    }
+
+    private void nameField(){
+        name = new JTextField();
+        name.setToolTipText("enter name here");
+        this.add(name, BorderLayout.WEST);
     }
 
     private void title(){
@@ -37,6 +47,10 @@ public class MyPanel extends JPanel {
 
     private void generateButton(){
         generateBtn = new JButton("Generate File");
+        generateBtn.addActionListener(e -> {
+            Block block = new Block(name.getText());
+            block.generateFiles();
+        });
         buttonPanel.add(generateBtn);
         this.add(buttonPanel, BorderLayout.SOUTH);
     }
