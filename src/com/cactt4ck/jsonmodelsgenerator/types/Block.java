@@ -3,7 +3,9 @@ package com.cactt4ck.jsonmodelsgenerator.types;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import java.io.File;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class Block {
 
@@ -15,7 +17,6 @@ public class Block {
     }
 
     public boolean generateFiles(){
-        blockState = new File("D:\\blockstate.json");
         JSONObject json = new JSONObject();
         JSONObject variants = new JSONObject();
         JSONObject doubleQuote = new JSONObject();
@@ -23,6 +24,14 @@ public class Block {
         doubleQuote.put("model", "block/" + name);
         variants.put("", doubleQuote);
         json.put("variants", variants);
+
+        try (FileWriter file = new FileWriter("D:\\blockstate.json")) {
+            file.write(json.toJSONString());
+            System.out.println("Successfully Copied JSON Object to File...");
+            System.out.println("\nJSON Object: " + json);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         System.out.println(json.toJSONString());
 

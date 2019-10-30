@@ -33,7 +33,8 @@ public class MyPanel extends JPanel {
 
     private void nameField(){
         name = new JTextField();
-        name.setToolTipText("enter name here");
+        name.setToolTipText("Enter name here");
+        name.setFont(new Font("Consolas", Font.PLAIN, 15));
         name.addActionListener(e -> this.actionListener());
         boxPanel.add(name);
     }
