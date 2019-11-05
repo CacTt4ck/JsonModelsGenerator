@@ -17,23 +17,35 @@ public class Block {
     }
 
     public boolean generateFiles(){
-        JSONObject json = new JSONObject();
-        JSONObject variants = new JSONObject();
-        JSONObject doubleQuote = new JSONObject();
+        JSONObject blockstateJson = new JSONObject(), variants = new JSONObject(), doubleQuote = new JSONObject();
+        JSONObject modelJson = new JSONObject(), all = new JSONObject();
 
         doubleQuote.put("model", "block/" + name);
         variants.put("", doubleQuote);
-        json.put("variants", variants);
+        blockstateJson.put("variants", variants);
+
+        all.put("all", "block/" + name);
+        modelJson.put("textures", all);
+        modelJson.put("parent", "block/cube_all");
+
+
+
 
         try (FileWriter file = new FileWriter("D:\\blockstate.json")) {
-            file.write(json.toJSONString());
+            file.write(blockstateJson.toJSONString());
             System.out.println("Successfully Copied JSON Object to File...");
-            System.out.println("\nJSON Object: " + json);
+            System.out.println("\nJSON Object: " + blockstateJson);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        System.out.println(json.toJSONString());
+        try (FileWriter file = new FileWriter("D:\\model.json")) {
+            file.write(modelJson.toJSONString());
+            System.out.println("Successfully Copied JSON Object to File...");
+            System.out.println("\nJSON Object: " + modelJson);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         return true;
     }
