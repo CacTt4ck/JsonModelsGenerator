@@ -1,11 +1,11 @@
 package com.cactt4ck.jsonmodelsgenerator.frames;
 
 import com.cactt4ck.jsonmodelsgenerator.types.Block;
+import com.cactt4ck.jsonmodelsgenerator.types.Items;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
-import java.nio.file.Paths;
 
 public class MyPanel extends JPanel {
 
@@ -17,9 +17,11 @@ public class MyPanel extends JPanel {
     private JComboBox<ImageIcon> choiceBox;
     private JPanel boxPanel, buttonPanel;
     private JFileChooser filechooser;
+    private boolean pathSelected;
 
     public MyPanel(){
         super();
+        this.pathSelected = false;
         this.setLayout(new BorderLayout());
         this.init();
     }
@@ -58,6 +60,7 @@ public class MyPanel extends JPanel {
         buttonPathChooser.addActionListener(e -> {
             modPath = paths();
             pathFound.setText("Path found !");
+            this.pathSelected = true;
             buttonPathChooser.setVisible(false);
         });
         boxPanel.add(buttonPathChooser);
@@ -71,17 +74,21 @@ public class MyPanel extends JPanel {
     }
 
     private void actionListener(){
-        ImageIcon choice = (ImageIcon) choiceBox.getSelectedItem();
-        if(choice == block){
-            Block block = new Block(name.getText());
-            block.generateFiles();
-        }else if(choice == item){
-            System.out.println("not ready yet !");
-        }else if(choice == tool){
-            System.out.println("not ready yet !");
-        }else if(choice == stair){
-            System.out.println("not ready yet !");
-        }
+        if(pathSelected){
+            ImageIcon choice = (ImageIcon) choiceBox.getSelectedItem();
+            if(choice == block){
+                Block block = new Block(name.getText());
+                block.generateFiles();
+            }else if(choice == item){
+                Items item = new Items(name.getText());
+                item.generateFiles();
+            }else if(choice == tool){
+                System.out.println("not ready yet !");
+            }else if(choice == stair){
+                System.out.println("not ready yet !");
+            }
+        } else
+            System.out.println("You have to select a correct path to your mod project!");
     }
 
     private void title(){
