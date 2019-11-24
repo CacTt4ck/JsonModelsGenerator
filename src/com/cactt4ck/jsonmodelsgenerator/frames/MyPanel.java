@@ -4,15 +4,19 @@ import com.cactt4ck.jsonmodelsgenerator.types.Block;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.nio.file.Paths;
 
 public class MyPanel extends JPanel {
 
-    private JButton generateBtn;
+    private JButton generateBtn, buttonPathChooser;
     private JTextField name;
-    private JLabel title;
+    private File modPath;
+    private JLabel title, pathFound;
     private ImageIcon block, item, tool, stair;
     private JComboBox<ImageIcon> choiceBox;
     private JPanel boxPanel, buttonPanel;
+    private JFileChooser filechooser;
 
     public MyPanel(){
         super();
@@ -25,6 +29,8 @@ public class MyPanel extends JPanel {
         boxPanel.setLayout(new BoxLayout(boxPanel, BoxLayout.Y_AXIS));
         buttonPanel = new JPanel();
         this.title();
+        this.pathChooser();
+        this.pathFound();
         this.choiceBox();
         this.generateButton();
         this.nameField();
@@ -37,6 +43,31 @@ public class MyPanel extends JPanel {
         name.setFont(new Font("Consolas", Font.PLAIN, 15));
         name.addActionListener(e -> this.actionListener());
         boxPanel.add(name);
+    }
+
+    private void pathFound(){
+        pathFound = new JLabel();
+        pathFound.setFont(new Font("Monaco",Font.PLAIN,12));
+        pathFound.setForeground(Color.green);
+        boxPanel.add(pathFound);
+    }
+
+    private void pathChooser(){
+        buttonPathChooser = new JButton();
+        buttonPathChooser.setText("Choose path");
+        buttonPathChooser.addActionListener(e -> {
+            modPath = paths();
+            pathFound.setText("Path found !");
+            buttonPathChooser.setVisible(false);
+        });
+        boxPanel.add(buttonPathChooser);
+    }
+
+    private File paths(){
+        filechooser = new JFileChooser();
+        filechooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int val = filechooser.showOpenDialog(this);
+        return filechooser.getCurrentDirectory();
     }
 
     private void actionListener(){

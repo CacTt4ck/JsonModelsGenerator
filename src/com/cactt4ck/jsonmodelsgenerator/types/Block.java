@@ -31,7 +31,6 @@ public class Block {
 
         try (FileWriter file = new FileWriter("blockstate.json")) {
             file.write(blockstateJson.toJSONString().replace("\\", ""));
-            System.out.println("Successfully Copied JSON Object to File...");
             System.out.println("\nJSON Object: " + blockstateJson.toJSONString().replace("\\", ""));
         } catch (IOException e) {
             e.printStackTrace();
@@ -39,7 +38,6 @@ public class Block {
 
         try (FileWriter file = new FileWriter("model.json")) {
             file.write(modelJson.toJSONString().replace("\\", ""));
-            System.out.println("Successfully Copied JSON Object to File...");
             System.out.println("\nJSON Object: " + blockstateJson.toJSONString().replace("\\", ""));
         } catch (IOException e) {
             e.printStackTrace();
