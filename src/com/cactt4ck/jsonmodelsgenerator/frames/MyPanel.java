@@ -67,7 +67,7 @@ public class MyPanel extends JPanel {
                     directories) {
                 System.out.println(file.getAbsolutePath());
             }
-            if(this.pathSelected == true){
+            if(this.pathSelected){
                 buttonPathChooser.setVisible(false);
                 pathFound.setText("Path found !");
             } else
@@ -83,7 +83,7 @@ public class MyPanel extends JPanel {
     private File paths(){
         filechooser = new JFileChooser();
         filechooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        int val = filechooser.showOpenDialog(this);
+        filechooser.showOpenDialog(this);
         return filechooser.getSelectedFile();
     }
 
@@ -129,7 +129,7 @@ public class MyPanel extends JPanel {
         stair = new ImageIcon(new ImageIcon("res/assets/pictures/stairs.png").getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH));
 
         ImageIcon[] imageList = {block, item, tool, stair};
-        choiceBox = new JComboBox<ImageIcon>(imageList);
+        choiceBox = new JComboBox<>(imageList);
         boxPanel.add(choiceBox);
         boxPanel.setBorder(BorderFactory.createEmptyBorder(75,150,75,150));
     }
