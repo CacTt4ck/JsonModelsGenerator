@@ -12,7 +12,7 @@ public class Main {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
             e.printStackTrace();
         }
-        SwingUtilities.invokeLater(()-> new MyFrame(false));
+        SwingUtilities.invokeLater(()-> new MyFrame("Json Model Generator", false));
     }
 
 }

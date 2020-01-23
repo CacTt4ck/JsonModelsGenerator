@@ -2,10 +2,12 @@ package com.cactt4ck.jsonmodelsgenerator.frames;
 
 import com.cactt4ck.jsonmodelsgenerator.types.Block;
 import com.cactt4ck.jsonmodelsgenerator.types.Items;
+import com.cactt4ck.jsonmodelsgenerator.types.Tool;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.io.IOException;
 
 public class MyPanel extends JPanel {
 
@@ -59,18 +61,30 @@ public class MyPanel extends JPanel {
         buttonPathChooser.setText("Choose path");
         buttonPathChooser.addActionListener(e -> {
             modPath = paths();
-            pathFound.setText("Path found !");
-            this.pathSelected = true;
-            buttonPathChooser.setVisible(false);
+            this.pathSelected = false;
+            File[] directories = modPath.listFiles(File::isDirectory);
+            for (File file :
+                    directories) {
+                System.out.println(file.getAbsolutePath());
+            }
+            if(this.pathSelected == true){
+                buttonPathChooser.setVisible(false);
+                pathFound.setText("Path found !");
+            } else
+                this.error();
         });
         boxPanel.add(buttonPathChooser);
+    }
+
+    private void error(){
+        JOptionPane.showMessageDialog(this, "Error path incorrect", "Error", JOptionPane.ERROR_MESSAGE);
     }
 
     private File paths(){
         filechooser = new JFileChooser();
         filechooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         int val = filechooser.showOpenDialog(this);
-        return filechooser.getCurrentDirectory();
+        return filechooser.getSelectedFile();
     }
 
     private void actionListener(){
@@ -83,12 +97,13 @@ public class MyPanel extends JPanel {
                 Items item = new Items(name.getText());
                 item.generateFiles();
             }else if(choice == tool){
-                System.out.println("not ready yet !");
+                Tool tool = new Tool(name.getText());
+                tool.generateFiles();
             }else if(choice == stair){
                 System.out.println("not ready yet !");
             }
         } else
-            System.out.println("You have to select a correct path to your mod project!");
+            JOptionPane.showMessageDialog(this, "You have to select a correct path to your mod project!", "Incorrect Path",JOptionPane.ERROR_MESSAGE);
     }
 
     private void title(){

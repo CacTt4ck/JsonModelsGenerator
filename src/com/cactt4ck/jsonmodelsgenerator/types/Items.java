@@ -13,7 +13,7 @@ public class Items {
         this.name = name;
     }
 
-    public boolean generateFiles(){
+    public void generateFiles(){
         JSONObject modelJson = new JSONObject(), layer0 = new JSONObject();
 
         layer0.put("layer0", "item/" + name);
@@ -27,7 +27,6 @@ public class Items {
             e.printStackTrace();
         }
 
-        return true;
     }
 
 }

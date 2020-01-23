@@ -9,8 +9,8 @@ public class MyFrame extends JFrame {
     /* version composition : xx-day, xx-month, xxxx-year, xxx-update in same journey */
     public static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
-    public MyFrame(boolean undecorated){
-        super();
+    public MyFrame(String title, boolean undecorated){
+        super(title);
         this.setUndecorated(undecorated);
         this.init();
     }

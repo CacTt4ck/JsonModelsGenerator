@@ -1,18 +1,15 @@
 package com.cactt4ck.jsonmodelsgenerator.types;
 
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.FileWriter;
+import java.io.IOException;
 
-public class Block implements ModObject {
+public class Tool implements ModObject {
 
     private String name;
 
-    public Block(String name) {
+    public Tool(String name) {
         this.name = name;
     }
 
