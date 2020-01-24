@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class MyPanel extends JPanel {
 
@@ -21,14 +22,14 @@ public class MyPanel extends JPanel {
     private JFileChooser filechooser;
     private boolean pathSelected;
 
-    public MyPanel(){
+    public MyPanel() {
         super();
         this.pathSelected = false;
         this.setLayout(new BorderLayout());
         this.init();
     }
 
-    private void init(){
+    private void init() {
         boxPanel = new JPanel();
         boxPanel.setLayout(new BoxLayout(boxPanel, BoxLayout.Y_AXIS));
         buttonPanel = new JPanel();
@@ -41,7 +42,7 @@ public class MyPanel extends JPanel {
         this.add(boxPanel, BorderLayout.CENTER);
     }
 
-    private void nameField(){
+    private void nameField() {
         name = new JTextField();
         name.setToolTipText("Enter name here");
         name.setFont(new Font("Consolas", Font.PLAIN, 15));
@@ -49,45 +50,55 @@ public class MyPanel extends JPanel {
         boxPanel.add(name);
     }
 
-    private void pathFound(){
+    private void pathFound() {
         pathFound = new JLabel();
         pathFound.setFont(new Font("Monaco",Font.PLAIN,12));
         pathFound.setForeground(Color.green);
         boxPanel.add(pathFound);
     }
 
-    private void pathChooser(){
+    private void pathChooser() {
         buttonPathChooser = new JButton();
         buttonPathChooser.setText("Choose path");
         buttonPathChooser.addActionListener(e -> {
             modPath = paths();
-            this.pathSelected = false;
             File[] directories = modPath.listFiles(File::isDirectory);
-            for (File file :
-                    directories) {
-                System.out.println(file.getAbsolutePath());
-            }
-            if(this.pathSelected){
+            if (isPathCorrect(directories)) {
                 buttonPathChooser.setVisible(false);
+                this.pathSelected = true;
                 pathFound.setText("Path found !");
             } else
-                this.error();
+                this.displayErrorMessage();
         });
         boxPanel.add(buttonPathChooser);
     }
 
-    private void error(){
+    private boolean isPathCorrect(File[] files) {
+        ArrayList<String> directories = new ArrayList<String>();
+        for (File file : files) {
+            directories.add(file.getAbsolutePath());
+            System.out.println(file.getAbsolutePath());
+        }
+        for (String directory :
+                directories) {
+            if(directory.contains(".gradle"))
+                return true;
+        }
+        return false;
+    }
+
+    private void displayErrorMessage() {
         JOptionPane.showMessageDialog(this, "Error path incorrect", "Error", JOptionPane.ERROR_MESSAGE);
     }
 
-    private File paths(){
+    private File paths() {
         filechooser = new JFileChooser();
         filechooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         filechooser.showOpenDialog(this);
         return filechooser.getSelectedFile();
     }
 
-    private void actionListener(){
+    private void actionListener() {
         if(pathSelected){
             ImageIcon choice = (ImageIcon) choiceBox.getSelectedItem();
             if(choice == block){
@@ -106,7 +117,7 @@ public class MyPanel extends JPanel {
             JOptionPane.showMessageDialog(this, "You have to select a correct path to your mod project!", "Incorrect Path",JOptionPane.ERROR_MESSAGE);
     }
 
-    private void title(){
+    private void title() {
         title = new JLabel("Json Generator");
         title.setHorizontalAlignment(SwingConstants.CENTER);
         title.setFont(new Font("Monaco",Font.BOLD,36));
@@ -115,7 +126,7 @@ public class MyPanel extends JPanel {
         this.add(title, BorderLayout.NORTH);
     }
 
-    private void generateButton(){
+    private void generateButton() {
         generateBtn = new JButton("Generate File");
         generateBtn.addActionListener(e -> this.actionListener());
         buttonPanel.add(generateBtn);
