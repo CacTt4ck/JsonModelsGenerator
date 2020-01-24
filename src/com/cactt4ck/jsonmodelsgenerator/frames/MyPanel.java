@@ -129,7 +129,7 @@ public class MyPanel extends JPanel {
         stair = new ImageIcon(new ImageIcon("res/assets/pictures/stairs.png").getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH));
 
         ImageIcon[] imageList = {block, item, tool, stair};
-        choiceBox = new JComboBox<>(imageList);
+        choiceBox = new JComboBox<ImageIcon>(imageList);
         boxPanel.add(choiceBox);
         boxPanel.setBorder(BorderFactory.createEmptyBorder(75,150,75,150));
     }

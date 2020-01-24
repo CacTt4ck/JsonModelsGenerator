@@ -8,7 +8,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-public class Block implements ModObject {
+public class Block {
 
     private String name;
 
@@ -16,7 +16,6 @@ public class Block implements ModObject {
         this.name = name;
     }
 
-    @Override
     public void generateFiles(){
         JSONObject blockstateJson = new JSONObject(), variants = new JSONObject(), doubleQuote = new JSONObject();
         JSONObject modelJson = new JSONObject(), all = new JSONObject();
