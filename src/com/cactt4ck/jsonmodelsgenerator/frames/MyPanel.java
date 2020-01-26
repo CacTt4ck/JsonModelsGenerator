@@ -1,14 +1,17 @@
 package com.cactt4ck.jsonmodelsgenerator.frames;
 
+import com.cactt4ck.jsonmodelsgenerator.LabelledImage;
 import com.cactt4ck.jsonmodelsgenerator.types.Block;
 import com.cactt4ck.jsonmodelsgenerator.types.Items;
 import com.cactt4ck.jsonmodelsgenerator.types.Tool;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MyPanel extends JPanel {
 
@@ -16,8 +19,8 @@ public class MyPanel extends JPanel {
     private JTextField name;
     private File modPath;
     private JLabel title, pathFound;
-    private ImageIcon block, item, tool, stair;
-    private JComboBox<ImageIcon> choiceBox;
+    private Image block, item, tool, stair;
+    private JComboBox<LabelledImage> choiceBox;
     private JPanel boxPanel, buttonPanel;
     private JFileChooser filechooser;
     private boolean pathSelected;
@@ -100,17 +103,17 @@ public class MyPanel extends JPanel {
 
     private void actionListener() {
         if(pathSelected){
-            ImageIcon choice = (ImageIcon) choiceBox.getSelectedItem();
-            if(choice == block){
+            Image choice = ((LabelledImage) choiceBox.getSelectedItem()).getImage();
+            if(choice.equals(block)){
                 Block block = new Block(name.getText());
                 block.generateFiles();
-            }else if(choice == item){
+            }else if(choice.equals(item)){
                 Items item = new Items(name.getText());
                 item.generateFiles();
-            }else if(choice == tool){
+            }else if(choice.equals(tool)){
                 Tool tool = new Tool(name.getText());
                 tool.generateFiles();
-            }else if(choice == stair){
+            }else if(choice.equals(stair)){
                 System.out.println("not ready yet !");
             }
         } else
@@ -134,15 +137,82 @@ public class MyPanel extends JPanel {
     }
 
     private void choiceBox(){
-        block = new ImageIcon(new ImageIcon("res/assets/pictures/block.png").getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH));
-        item = new ImageIcon(new ImageIcon("res/assets/pictures/item.png").getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH));
-        tool = new ImageIcon(new ImageIcon("res/assets/pictures/tool.png").getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH));
-        stair = new ImageIcon(new ImageIcon("res/assets/pictures/stairs.png").getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH));
+        try {
+            block = ImageIO.read(MyPanel.class.getClassLoader().getResourceAsStream("assets/pictures/block.png"));
+            item = ImageIO.read(MyPanel.class.getClassLoader().getResourceAsStream("assets/pictures/item.png"));
+            tool = ImageIO.read(MyPanel.class.getClassLoader().getResourceAsStream("assets/pictures/tool.png"));
+            stair = ImageIO.read(MyPanel.class.getClassLoader().getResourceAsStream("assets/pictures/stairs.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        ImageIcon[] imageList = {block, item, tool, stair};
-        choiceBox = new JComboBox<ImageIcon>(imageList);
+        LabelledImage[] labelledImages = {new LabelledImage("Classic block", block),
+                new LabelledImage("Basic item", item),
+                new LabelledImage("Stairs shape block", stair),
+                new LabelledImage("Basic tool", tool)};
+        choiceBox = new JComboBox<LabelledImage>(labelledImages);
+        choiceBox.setRenderer(new LabelledImageRenderer());
         boxPanel.add(choiceBox);
         boxPanel.setBorder(BorderFactory.createEmptyBorder(75,150,75,150));
     }
 
 }
+
+class LabelledImageRenderer extends JPanel implements ListCellRenderer<LabelledImage> {
+
+    public LabelledImageRenderer() {
+        this.setOpaque(true);
+        this.setLayout(new GridLayout(1, 2));
+        this.setPreferredSize(new Dimension(282, 70));
+    }
+
+    @Override
+    public Component getListCellRendererComponent(JList<? extends LabelledImage> list, LabelledImage value, int index, boolean isSelected, boolean cellHasFocus) {
+        this.removeAll();
+
+        if (isSelected) {
+            this.setBackground(list.getSelectionBackground());
+            this.setForeground(list.getSelectionForeground());
+        } else {
+            this.setBackground(list.getBackground());
+            this.setForeground(list.getForeground());
+        }
+
+        JPanel labelledImagePanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+
+                Graphics2D g2 = (Graphics2D) g;
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+
+                final Image image = value.getImage();
+
+                final int padding = 1,
+                        cHeight = this.getHeight() - (padding) * 2,
+                        cWidth = (int) ((float) cHeight * ((float) image.getWidth(null) / (float) image.getHeight(null))),
+                        cX = 5,
+                        cY = padding;
+
+                g2.drawImage(image, cX, cY, null);
+            }
+        };
+        labelledImagePanel.setOpaque(false);
+
+        JLabel labelledImageLabel = new JLabel(value.getLabel());
+        /*if (isSelected)
+            labelledImageLabel.setForeground(Color.WHITE);
+        else*/
+            labelledImageLabel.setForeground(Color.BLACK);
+
+        labelledImageLabel.setOpaque(false);
+
+        this.add(labelledImagePanel);
+        this.add(labelledImageLabel);
+
+        return this;
+    }
+
+}
+
