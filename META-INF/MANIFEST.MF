@@ -1,4 +1,7 @@
 Manifest-Version: 1.0
 Main-Class: com.cactt4ck.jsonmodelsgenerator.Main
 Class-Path: .
+Library-Name: json-simple-1.1.jar
+Library-Description: Library for Json gestion
+Library-Version: 1.1
 
