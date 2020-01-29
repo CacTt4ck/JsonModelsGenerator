@@ -11,7 +11,6 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import static java.awt.Image.SCALE_SMOOTH;
 
@@ -44,7 +43,6 @@ public class MyPanel extends JPanel {
         this.add(southPanel, BorderLayout.SOUTH);
         this.title();
         this.invisiblebutton();
-        this.pathFound();
         this.choiceBox();
         this.generateButton();
         this.nameField();
@@ -69,13 +67,6 @@ public class MyPanel extends JPanel {
         boxPanel.add(name);
     }
 
-    private void pathFound() {
-        pathFound = new JLabel();
-        pathFound.setFont(new Font("Monaco",Font.PLAIN,12));
-        pathFound.setForeground(Color.green);
-        boxPanel.add(pathFound);
-    }
-
     private void pathChooser() {
         try {
             foldericon = new ImageIcon(ImageIO.read(MyPanel.class.getClassLoader().getResourceAsStream("assets/pictures/folder-icon.png")).getScaledInstance(48,48, SCALE_SMOOTH));
@@ -93,9 +84,9 @@ public class MyPanel extends JPanel {
             if (isPathCorrect(directories)) {
                 buttonPathChooser.setVisible(false);
                 this.pathSelected = true;
-                pathFound.setText("Path found !");
+                this.pathFoundMessage();
             } else
-                this.displayErrorMessage();
+                this.pathNotFoundMessage();
         });
 
         southPanel.add(buttonPathChooser, BorderLayout.EAST);
@@ -113,8 +104,12 @@ public class MyPanel extends JPanel {
         return false;
     }
 
-    private void displayErrorMessage() {
+    private void pathNotFoundMessage() {
         JOptionPane.showMessageDialog(this, "Error path incorrect", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    private void pathFoundMessage() {
+        JOptionPane.showMessageDialog(this, "Path successfully found", "Information", JOptionPane.INFORMATION_MESSAGE);
     }
 
     private File paths() {
