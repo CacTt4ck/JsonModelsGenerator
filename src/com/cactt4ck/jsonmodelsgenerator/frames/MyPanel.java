@@ -116,7 +116,7 @@ public class MyPanel extends JPanel {
                 JOptionPane.showMessageDialog(this, "Error path incorrect", "Error", JOptionPane.ERROR_MESSAGE);
                 break;
             case PATH_NOT_SELECTED:
-                JOptionPane.showMessageDialog(this, "You have to select a correct path to your mod project!", "Incorrect Path",JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "You have to select a correct path to your mod project!", "Error",JOptionPane.ERROR_MESSAGE);
                 break;
             default:
                 break;
