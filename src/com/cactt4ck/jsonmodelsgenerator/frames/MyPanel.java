@@ -13,17 +13,20 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.awt.Image.SCALE_SMOOTH;
+
 public class MyPanel extends JPanel {
 
-    private JButton generateBtn, buttonPathChooser;
+    private JButton generateBtn, buttonPathChooser, invisiblebutton;
     private JTextField name;
     private File modPath;
     private JLabel title, pathFound;
     private Image block, item, tool, stair;
     private JComboBox<LabelledImage> choiceBox;
-    private JPanel boxPanel, buttonPanel;
+    private JPanel boxPanel, buttonPanel, southPanel;
     private JFileChooser filechooser;
     private boolean pathSelected;
+    private ImageIcon foldericon, processicon;
 
     public MyPanel() {
         super();
@@ -36,13 +39,26 @@ public class MyPanel extends JPanel {
         boxPanel = new JPanel();
         boxPanel.setLayout(new BoxLayout(boxPanel, BoxLayout.Y_AXIS));
         buttonPanel = new JPanel();
+        southPanel = new JPanel(new BorderLayout());
+        this.add(boxPanel, BorderLayout.CENTER);
+        this.add(southPanel, BorderLayout.SOUTH);
         this.title();
-        this.pathChooser();
+        this.invisiblebutton();
         this.pathFound();
         this.choiceBox();
         this.generateButton();
         this.nameField();
-        this.add(boxPanel, BorderLayout.CENTER);
+        this.pathChooser();
+    }
+
+    private void invisiblebutton() {
+        invisiblebutton = new JButton();
+        invisiblebutton.setEnabled(false);
+        invisiblebutton.setOpaque(false);
+        invisiblebutton.setBorderPainted(false);
+        invisiblebutton.setContentAreaFilled(false);
+        invisiblebutton.setFocusPainted(false);
+        southPanel.add(invisiblebutton, BorderLayout.CENTER);
     }
 
     private void nameField() {
@@ -61,8 +77,16 @@ public class MyPanel extends JPanel {
     }
 
     private void pathChooser() {
-        buttonPathChooser = new JButton();
-        buttonPathChooser.setText("Choose path");
+        try {
+            foldericon = new ImageIcon(ImageIO.read(MyPanel.class.getClassLoader().getResourceAsStream("assets/pictures/folder-icon.png")).getScaledInstance(48,48, SCALE_SMOOTH));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        buttonPathChooser = new JButton(foldericon);
+        buttonPathChooser.setOpaque(false);
+        buttonPathChooser.setBorderPainted(false);
+        buttonPathChooser.setContentAreaFilled(false);
+        buttonPathChooser.setFocusPainted(false);
         buttonPathChooser.addActionListener(e -> {
             modPath = paths();
             File[] directories = modPath.listFiles(File::isDirectory);
@@ -73,15 +97,14 @@ public class MyPanel extends JPanel {
             } else
                 this.displayErrorMessage();
         });
-        boxPanel.add(buttonPathChooser);
+
+        southPanel.add(buttonPathChooser, BorderLayout.EAST);
     }
 
     private boolean isPathCorrect(File[] files) {
         ArrayList<String> directories = new ArrayList<String>();
-        for (File file : files) {
+        for (File file : files)
             directories.add(file.getAbsolutePath());
-            System.out.println(file.getAbsolutePath());
-        }
         for (String directory :
                 directories) {
             if(directory.contains(".gradle"))
@@ -130,18 +153,27 @@ public class MyPanel extends JPanel {
     }
 
     private void generateButton() {
-        generateBtn = new JButton("Generate File");
+        try {
+            processicon = new ImageIcon(ImageIO.read(MyPanel.class.getClassLoader().getResourceAsStream("assets/pictures/process.png")).getScaledInstance(48,48, SCALE_SMOOTH));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        generateBtn = new JButton(processicon);
         generateBtn.addActionListener(e -> this.actionListener());
-        buttonPanel.add(generateBtn);
-        this.add(buttonPanel, BorderLayout.SOUTH);
+        generateBtn.setOpaque(false);
+        generateBtn.setBorderPainted(false);
+        generateBtn.setContentAreaFilled(false);
+        generateBtn.setFocusPainted(false);
+
+        southPanel.add(generateBtn, BorderLayout.WEST);
     }
 
     private void choiceBox(){
         try {
-            block = ImageIO.read(MyPanel.class.getClassLoader().getResourceAsStream("assets/pictures/block.png"));
-            item = ImageIO.read(MyPanel.class.getClassLoader().getResourceAsStream("assets/pictures/item.png"));
-            tool = ImageIO.read(MyPanel.class.getClassLoader().getResourceAsStream("assets/pictures/tool.png"));
-            stair = ImageIO.read(MyPanel.class.getClassLoader().getResourceAsStream("assets/pictures/stairs.png"));
+            block = ImageIO.read(MyPanel.class.getClassLoader().getResourceAsStream("assets/pictures/block.png")).getScaledInstance(64,64, SCALE_SMOOTH);
+            item = ImageIO.read(MyPanel.class.getClassLoader().getResourceAsStream("assets/pictures/item.png")).getScaledInstance(64,64, SCALE_SMOOTH);
+            tool = ImageIO.read(MyPanel.class.getClassLoader().getResourceAsStream("assets/pictures/tool.png")).getScaledInstance(64,64, SCALE_SMOOTH);
+            stair = ImageIO.read(MyPanel.class.getClassLoader().getResourceAsStream("assets/pictures/stairs.png")).getScaledInstance(64,64, SCALE_SMOOTH);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -204,7 +236,7 @@ class LabelledImageRenderer extends JPanel implements ListCellRenderer<LabelledI
         /*if (isSelected)
             labelledImageLabel.setForeground(Color.WHITE);
         else*/
-            labelledImageLabel.setForeground(Color.BLACK);
+        labelledImageLabel.setForeground(Color.BLACK);
 
         labelledImageLabel.setOpaque(false);
 
