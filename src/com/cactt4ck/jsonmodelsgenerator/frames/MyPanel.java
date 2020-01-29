@@ -39,6 +39,7 @@ public class MyPanel extends JPanel {
         boxPanel.setLayout(new BoxLayout(boxPanel, BoxLayout.Y_AXIS));
         buttonPanel = new JPanel();
         southPanel = new JPanel(new BorderLayout());
+        southPanel.setBorder(BorderFactory.createEmptyBorder(0,0,10,0));
         this.add(boxPanel, BorderLayout.CENTER);
         this.add(southPanel, BorderLayout.SOUTH);
         this.title();
@@ -180,7 +181,7 @@ public class MyPanel extends JPanel {
         choiceBox = new JComboBox<LabelledImage>(labelledImages);
         choiceBox.setRenderer(new LabelledImageRenderer());
         boxPanel.add(choiceBox);
-        boxPanel.setBorder(BorderFactory.createEmptyBorder(75,150,75,150));
+        boxPanel.setBorder(BorderFactory.createEmptyBorder(30,75,30,75));
     }
 
 }
@@ -190,7 +191,7 @@ class LabelledImageRenderer extends JPanel implements ListCellRenderer<LabelledI
     public LabelledImageRenderer() {
         this.setOpaque(true);
         this.setLayout(new GridLayout(1, 2));
-        this.setPreferredSize(new Dimension(282, 70));
+        this.setPreferredSize(new Dimension(200, 70));
     }
 
     @Override
