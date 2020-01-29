@@ -72,7 +72,7 @@ public class MyPanel extends JPanel {
 
     private void pathChooser() {
         try {
-            foldericon = new ImageIcon(ImageIO.read(MyPanel.class.getClassLoader().getResourceAsStream("assets/pictures/folder-icon.png")).getScaledInstance(48,48, SCALE_SMOOTH));
+            foldericon = new ImageIcon(ImageIO.read(MyPanel.class.getClassLoader().getResourceAsStream("assets/pictures/folder.png")).getScaledInstance(48,48, SCALE_SMOOTH));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -160,7 +160,7 @@ public class MyPanel extends JPanel {
 
     private void generateButton() {
         try {
-            processicon = new ImageIcon(ImageIO.read(MyPanel.class.getClassLoader().getResourceAsStream("assets/pictures/process.png")).getScaledInstance(48,48, SCALE_SMOOTH));
+            processicon = new ImageIcon(ImageIO.read(MyPanel.class.getClassLoader().getResourceAsStream("assets/pictures/document.png")).getScaledInstance(48,48, SCALE_SMOOTH));
         } catch (IOException e) {
             e.printStackTrace();
         }
