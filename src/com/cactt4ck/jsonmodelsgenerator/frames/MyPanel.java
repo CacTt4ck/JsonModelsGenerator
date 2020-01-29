@@ -18,16 +18,16 @@ import static java.awt.Image.SCALE_SMOOTH;
 
 public class MyPanel extends JPanel {
 
-    private JButton generateBtn, buttonPathChooser, invisiblebutton;
+    private JButton generateBtn, buttonPathChooser, invisiblebutton, infoButton;
     private JTextField name;
     private File modPath;
     private JLabel title, pathFound;
     private Image block, item, tool, stair;
     private JComboBox<LabelledImage> choiceBox;
-    private JPanel boxPanel, buttonPanel, southPanel;
+    private JPanel boxPanel, northPanel, southPanel;
     private JFileChooser filechooser;
     private boolean pathSelected;
-    private ImageIcon foldericon, processicon;
+    private ImageIcon foldericon, processicon, infoicon;
 
     public MyPanel() {
         super();
@@ -39,10 +39,11 @@ public class MyPanel extends JPanel {
     private void init() {
         boxPanel = new JPanel();
         boxPanel.setLayout(new BoxLayout(boxPanel, BoxLayout.Y_AXIS));
-        buttonPanel = new JPanel();
+        northPanel = new JPanel(new BorderLayout());
         southPanel = new JPanel(new BorderLayout());
         southPanel.setBorder(BorderFactory.createEmptyBorder(0,0,10,0));
         this.add(boxPanel, BorderLayout.CENTER);
+        this.add(northPanel, BorderLayout.NORTH);
         this.add(southPanel, BorderLayout.SOUTH);
         this.title();
         this.invisiblebutton();
@@ -50,6 +51,7 @@ public class MyPanel extends JPanel {
         this.generateButton();
         this.nameField();
         this.pathChooser();
+        this.infoButton();
     }
 
     private void invisiblebutton() {
@@ -149,18 +151,34 @@ public class MyPanel extends JPanel {
             this.showMessage(PATH_NOT_SELECTED);
     }
 
+    private void infoButton(){
+        try {
+            infoicon = new ImageIcon(ImageIO.read(MyPanel.class.getClassLoader().getResourceAsStream("assets/pictures/question.png")).getScaledInstance(32,32, SCALE_SMOOTH));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        infoButton = new JButton(infoicon);
+        infoButton.setOpaque(false);
+        infoButton.setBorderPainted(false);
+        infoButton.setContentAreaFilled(false);
+        infoButton.setFocusPainted(false);
+
+        northPanel.add(infoButton, BorderLayout.WEST);
+        northPanel.add(invisiblebutton, BorderLayout.EAST);
+    }
+
     private void title() {
         title = new JLabel("Json Generator");
         title.setHorizontalAlignment(SwingConstants.CENTER);
         title.setFont(new Font("Monaco",Font.BOLD,36));
         title.setForeground(Color.BLACK);
         title.setBorder(BorderFactory.createEmptyBorder(0,50,0,50));
-        this.add(title, BorderLayout.NORTH);
+        northPanel.add(title, BorderLayout.CENTER);
     }
 
     private void generateButton() {
         try {
-            processicon = new ImageIcon(ImageIO.read(MyPanel.class.getClassLoader().getResourceAsStream("assets/pictures/document.png")).getScaledInstance(48,48, SCALE_SMOOTH));
+            processicon = new ImageIcon(ImageIO.read(MyPanel.class.getClassLoader().getResourceAsStream("assets/pictures/settings.png")).getScaledInstance(48,48, SCALE_SMOOTH));
         } catch (IOException e) {
             e.printStackTrace();
         }
