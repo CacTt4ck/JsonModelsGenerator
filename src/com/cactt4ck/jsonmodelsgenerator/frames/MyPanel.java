@@ -1,6 +1,7 @@
 package com.cactt4ck.jsonmodelsgenerator.frames;
 
 import com.cactt4ck.jsonmodelsgenerator.LabelledImage;
+import com.cactt4ck.jsonmodelsgenerator.Messages;
 import com.cactt4ck.jsonmodelsgenerator.types.Block;
 import com.cactt4ck.jsonmodelsgenerator.types.Items;
 import com.cactt4ck.jsonmodelsgenerator.types.Tool;
@@ -12,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static com.cactt4ck.jsonmodelsgenerator.Messages.*;
 import static java.awt.Image.SCALE_SMOOTH;
 
 public class MyPanel extends JPanel {
@@ -85,9 +87,9 @@ public class MyPanel extends JPanel {
             if (isPathCorrect(directories)) {
                 buttonPathChooser.setVisible(false);
                 this.pathSelected = true;
-                this.pathFoundMessage();
+                this.showMessage(PATH_VALID);
             } else
-                this.pathNotFoundMessage();
+                this.showMessage(PATH_INVALID);
         });
 
         southPanel.add(buttonPathChooser, BorderLayout.EAST);
@@ -105,12 +107,20 @@ public class MyPanel extends JPanel {
         return false;
     }
 
-    private void pathNotFoundMessage() {
-        JOptionPane.showMessageDialog(this, "Error path incorrect", "Error", JOptionPane.ERROR_MESSAGE);
-    }
-
-    private void pathFoundMessage() {
-        JOptionPane.showMessageDialog(this, "Path successfully found", "Information", JOptionPane.INFORMATION_MESSAGE);
+    private void showMessage(Messages type) {
+        switch (type){
+            case PATH_VALID:
+                JOptionPane.showMessageDialog(this, "Path successfully found", "Information", JOptionPane.INFORMATION_MESSAGE);
+                break;
+            case PATH_INVALID:
+                JOptionPane.showMessageDialog(this, "Error path incorrect", "Error", JOptionPane.ERROR_MESSAGE);
+                break;
+            case PATH_NOT_SELECTED:
+                JOptionPane.showMessageDialog(this, "You have to select a correct path to your mod project!", "Incorrect Path",JOptionPane.ERROR_MESSAGE);
+                break;
+            default:
+                break;
+        }
     }
 
     private File paths() {
@@ -136,7 +146,7 @@ public class MyPanel extends JPanel {
                 System.out.println("not ready yet !");
             }
         } else
-            JOptionPane.showMessageDialog(this, "You have to select a correct path to your mod project!", "Incorrect Path",JOptionPane.ERROR_MESSAGE);
+            this.showMessage(PATH_NOT_SELECTED);
     }
 
     private void title() {
