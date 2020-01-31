@@ -1,7 +1,7 @@
 package com.cactt4ck.jsonmodelsgenerator.frames;
 
-import com.cactt4ck.jsonmodelsgenerator.LabelledImage;
-import com.cactt4ck.jsonmodelsgenerator.Messages;
+import com.cactt4ck.jsonmodelsgenerator.utils.LabelledImage;
+import com.cactt4ck.jsonmodelsgenerator.utils.Messages;
 import com.cactt4ck.jsonmodelsgenerator.types.Block;
 import com.cactt4ck.jsonmodelsgenerator.types.Items;
 import com.cactt4ck.jsonmodelsgenerator.types.Tool;
@@ -13,7 +13,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static com.cactt4ck.jsonmodelsgenerator.Messages.*;
 import static java.awt.Image.SCALE_SMOOTH;
 
 public class MyPanel extends JPanel {
@@ -89,9 +88,9 @@ public class MyPanel extends JPanel {
             if (isPathCorrect(directories)) {
                 buttonPathChooser.setVisible(false);
                 this.pathSelected = true;
-                this.showMessage(PATH_VALID);
+                Messages.showMessage(Messages.PATH_VALID, this);
             } else
-                this.showMessage(PATH_INVALID);
+                Messages.showMessage(Messages.PATH_INVALID, this);
         });
 
         southPanel.add(buttonPathChooser, BorderLayout.EAST);
@@ -107,22 +106,6 @@ public class MyPanel extends JPanel {
                 return true;
         }
         return false;
-    }
-
-    private void showMessage(Messages type) {
-        switch (type){
-            case PATH_VALID:
-                JOptionPane.showMessageDialog(this, "Path successfully found", "Information", JOptionPane.INFORMATION_MESSAGE);
-                break;
-            case PATH_INVALID:
-                JOptionPane.showMessageDialog(this, "Error path incorrect", "Error", JOptionPane.ERROR_MESSAGE);
-                break;
-            case PATH_NOT_SELECTED:
-                JOptionPane.showMessageDialog(this, "You have to select a correct path to your mod project!", "Error",JOptionPane.ERROR_MESSAGE);
-                break;
-            default:
-                break;
-        }
     }
 
     private File paths() {
@@ -148,7 +131,7 @@ public class MyPanel extends JPanel {
                 System.out.println("not ready yet !");
             }
         } else
-            this.showMessage(PATH_NOT_SELECTED);
+            Messages.showMessage(Messages.PATH_NOT_SELECTED, this);
     }
 
     private void infoButton(){

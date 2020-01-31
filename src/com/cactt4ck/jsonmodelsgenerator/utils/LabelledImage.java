@@ -1,4 +1,4 @@
-package com.cactt4ck.jsonmodelsgenerator;
+package com.cactt4ck.jsonmodelsgenerator.utils;
 
 import java.awt.*;
 
