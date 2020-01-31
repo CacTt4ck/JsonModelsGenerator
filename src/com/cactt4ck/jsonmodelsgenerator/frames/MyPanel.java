@@ -145,6 +145,7 @@ public class MyPanel extends JPanel {
         infoButton.setBorderPainted(false);
         infoButton.setContentAreaFilled(false);
         infoButton.setFocusPainted(false);
+        infoButton.addActionListener(e -> SwingUtilities.invokeLater(() -> new InfoDialog(true)));
 
         northPanel.add(infoButton, BorderLayout.WEST);
         northPanel.add(invisiblebutton, BorderLayout.EAST);
