@@ -117,7 +117,7 @@ public class MyPanel extends JPanel {
 
     private void actionListener() {
         if(pathSelected){
-            Image choice = ((LabelledImage) choiceBox.getSelectedItem()).getImage();
+            Image choice = ((LabelledImage) choiceBox.getSelectedItem()).image();
             if(choice.equals(block)){
                 Block block = new Block(name.getText());
                 block.generateFiles();
@@ -227,7 +227,7 @@ class LabelledImageRenderer extends JPanel implements ListCellRenderer<LabelledI
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
 
-                final Image image = value.getImage();
+                final Image image = value.image();
 
                 final int padding = 1,
                         cHeight = this.getHeight() - (padding) * 2,
@@ -240,7 +240,7 @@ class LabelledImageRenderer extends JPanel implements ListCellRenderer<LabelledI
         };
         labelledImagePanel.setOpaque(false);
 
-        JLabel labelledImageLabel = new JLabel(value.getLabel());
+        JLabel labelledImageLabel = new JLabel(value.label());
         /*if (isSelected)
             labelledImageLabel.setForeground(Color.WHITE);
         else*/
